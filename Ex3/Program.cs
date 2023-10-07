@@ -21,9 +21,8 @@
 int rows = WorkWithUser("Введите кол-во строк: ");
 int columns = WorkWithUser("Введите кол-во столбцов: ");
 int[,] array = GetArray(rows, columns);
-int foundCount = WorkWithUser("Введите искомое число: ");
 PrintArray(array);
-FoundCountNumbersInMatrix(array, foundCount);
+CountNumbersInMatrix(array);
 
 int WorkWithUser(string message)
 {
@@ -57,19 +56,23 @@ void PrintArray(int[,] inArray)
     }
 }
 
-void FoundCountNumbersInMatrix(int[,] inArray, int foundCount)
+void CountNumbersInMatrix(int[,] inArray)
 {
-    int count = 0;
-    for(int i = 0; i < inArray.GetLength(0); i++) // GetLength(0) для строчик
-    { 
-        for (int j = 0; j < inArray.GetLength(1); j++) //GetLength(1) для столбца
+    // Допустим, что числа в массиве от 1 до 9 (так как rnd.Next(1, 10))
+    int[] counts = new int[10];
+    for (int i = 0; i < inArray.GetLength(0); i++)
+    {
+        for (int j = 0; j < inArray.GetLength(1); j++)
         {
-            if (inArray[i,j] == foundCount)
-            {
-               count++;
-            }
+            counts[inArray[i, j]]++;
         }
     }
-    System.Console.WriteLine($"Число {foundCount} встречается {count} раз.");
+    for (int i = 1; i < counts.Length; i++)
+    {
+        if (counts[i] > 0)
+        {
+            System.Console.WriteLine($"Число {i} встречается {counts[i]} раз.");
+        }
+    }
 }
 
