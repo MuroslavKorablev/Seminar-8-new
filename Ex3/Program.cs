@@ -20,15 +20,10 @@
 
 int rows = WorkWithUser("Введите кол-во строк: ");
 int columns = WorkWithUser("Введите кол-во столбцов: ");
-int minValue = WorkWithUser("Введите минимальное значение: ");
-int maxValue = WorkWithUser("Введите максимальное значение: ");
-int[,] array = GetArray(rows, columns, minValue, maxValue + 1);
-if (rows != columns)
-{
-    System.Console.WriteLine("Замена строк на столбцы невозможна, так как матрица не квадратная.");
-    return;
-} 
-
+int[,] array = GetArray(rows, columns);
+int foundCount = WorkWithUser("Введите искомое число: ");
+PrintArray(array);
+FoundCountNumbersInMatrix(array, foundCount);
 
 int WorkWithUser(string message)
 {
@@ -37,7 +32,7 @@ int WorkWithUser(string message)
     return number;
 }
 
-int[,] GetArray(int row, int column, int minValue, int maxValue)
+int[,] GetArray(int row, int column)
 {
     int[,] result = new int[row, column];
     Random rnd = new Random();
@@ -45,8 +40,36 @@ int[,] GetArray(int row, int column, int minValue, int maxValue)
     {
         for (int j = 0; j < column; j++)
         {
-            result[i, j] = rnd.Next(minValue, maxValue);
+            result[i, j] = rnd.Next(1, 10);
         }
     }
     return result;
 }
+void PrintArray(int[,] inArray)
+{
+    for(int i = 0; i < inArray.GetLength(0); i++) // GetLength(0) для строчик
+    { 
+        for (int j = 0; j < inArray.GetLength(1); j++) //GetLength(1) для столбца
+        {
+            System.Console.Write($"{inArray[i, j]} "); 
+        }
+        System.Console.WriteLine();
+    }
+}
+
+void FoundCountNumbersInMatrix(int[,] inArray, int foundCount)
+{
+    int count = 0;
+    for(int i = 0; i < inArray.GetLength(0); i++) // GetLength(0) для строчик
+    { 
+        for (int j = 0; j < inArray.GetLength(1); j++) //GetLength(1) для столбца
+        {
+            if (inArray[i,j] == foundCount)
+            {
+               count++;
+            }
+        }
+    }
+    System.Console.WriteLine($"Число {foundCount} встречается {count} раз.");
+}
+
